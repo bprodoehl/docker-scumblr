@@ -1,7 +1,9 @@
-docker_scumblr
+docker-scumblr
 =====================
 
 # Scumblr with Docker
+
+This container is derived from https://github.com/ahoernecke/docker_scumblr
 
 This repo contains everything you need to deploy a basic instance of Scumblr (https://github.com/netflix/scumblr). Scumblr is a Netflix open source project that allows performing periodic searches and storing / taking actions on the identified results.
 
@@ -52,6 +54,9 @@ SCUMBLR_LOAD_SCHEMA # Run rake db:schema:load. For initial DB setup. Will reset 
 SCUMBLR_RUN_MIGRATIONS # Run rake db:migrate if true. Will update database with migrations if included.
 SCUMBLR_SEED_STATUSES # Create a default set of statuses if set to "true"
 SCUMBLR_SEED_ADMIN # Create an admin user (admin@admin.admin/password) if no users exist and SEED_ADMIN set to "true"
+
+SCUMBLR_ADMIN_USER # User (defaults to admin@admin.admin)
+SCUMBLR_ADMIN_PASSWORD # Password (defaults to password)
 
 SKETCHY_PORT_443_TCP_ADDR
 SKETCHY_PORT_443_TCP_PORT

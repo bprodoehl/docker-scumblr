@@ -1,6 +1,17 @@
 
+admin_user = "admin@admin.admin"
+admin_password = "password"
+
+if(ENV["SCUMBLR_ADMIN_USER"])
+  admin_user = ENV["SCUMBLR_ADMIN_USER"]
+end
+if(ENV["SCUMBLR_ADMIN_PASSWORD"])
+  admin_password = ENV["SCUMBLR_ADMIN_PASSWORD"]
+end
+
 if(ENV["SCUMBLR_SEED_ADMIN"] == "true" && User.count == 0)
-  User.create(:email=>"admin@admin.admin", :password=>"password", :password_confirmation=>"password", :admin=>true)
+  User.create(:email=>admin_user, :password=>admin_password,
+              :password_confirmation=>admin_password, :admin=>true)
 end
 
 if(ENV["SCUMBLR_SEED_STATUSES"] == "true" && Status.count == 0)

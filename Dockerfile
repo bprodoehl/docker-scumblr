@@ -25,7 +25,9 @@ USER app
 
 RUN mkdir /home/app/scumblr
 WORKDIR /home/app/scumblr
-RUN git clone https://github.com/Netflix/scumblr.git .
+
+RUN git clone https://github.com/bprodoehl/scumblr.git . && \
+    git checkout 84ed6c378392db06e4291838d2b1e4b06af39d3e
 RUN gem2.1 install bundler --no-ri --no-rdoc --user-install
 RUN gem2.1 install sidekiq --no-ri --no-rdoc --user-install
 RUN /home/app/.gem/ruby/2.1.0/bin/bundle install --path vendor/cache
