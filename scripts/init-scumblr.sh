@@ -25,7 +25,8 @@ if [ "$SCUMBLR_DB_TYPE" == "mysql" ]; then
   echo "  database: ${DB_NAME}" >> $DBYML
   echo "  username: ${DB_USER}" >> $DBYML
   echo "  password: ${DB_PASSWORD}" >> $DBYML
-  echo "  host: mysql://${DB_HOST}:${DB_PORT}" >> $DBYML
+  echo "  host: ${DB_HOST}" >> $DBYML
+  echo "  port: ${DB_PORT}" >> $DBYML
   echo "" >> $DBYML
   echo "production:" >> $DBYML
   echo "  adapter: mysql2" >> $DBYML
@@ -33,7 +34,8 @@ if [ "$SCUMBLR_DB_TYPE" == "mysql" ]; then
   echo "  database: ${DB_NAME}" >> $DBYML
   echo "  username: ${DB_USER}" >> $DBYML
   echo "  password: ${DB_PASSWORD}" >> $DBYML
-  echo "  host: mysql://${DB_HOST}:${DB_PORT}" >> $DBYML
+  echo "  host: ${DB_HOST}" >> $DBYML
+  echo "  port: ${DB_PORT}" >> $DBYML
 else
   echo "Initializing for SQLite database type"
 fi
