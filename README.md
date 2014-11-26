@@ -73,18 +73,18 @@ The following are environment variables available to configure scumblr:
 
 This section includes instructions on creating and deploying a container running Scumblr and Sketchy.
 
-* Pull this repo from Github:
+* Pull this repo from Github, build the container, and run it.
 
-``git clone https://github.com/bprodoehl/docker-scumblr``
-``cd docker-scumblr``
+```bash
+git clone https://github.com/bprodoehl/docker-scumblr
+cd docker-scumblr
 
-* Build the docker image
+# Build the docker image
+docker build -t scumblr .
 
-``docker build -t scumblr . ``
-
-* Run the container either:
-
-``docker run -p 80:80 -p 443:443 scumblr``
+#Run the container
+docker run -p 80:80 -p 443:443 scumblr
+```
 
 * Visit your server's domain name or IP in a browser
 
@@ -92,4 +92,4 @@ This section includes instructions on creating and deploying a container running
 
 ### Advanced Deployment
 
-A more advanced deployment scenario is provided in the launch-scumblr.sh script.  This will create a MySQL database container using the official MySQL repository in the Docker Hub, and will configure that database for UTF8 character set, which is critical if you will have any international search results.  It will then spin up the scumblr container, linked to that database.
+A more advanced deployment scenario is provided in the [launch-scumblr.sh script](https://github.com/bprodoehl/docker-scumblr/blob/master/launch-scumblr.sh).  This will create a MySQL database container using the official MySQL repository in the Docker Hub, and will configure that database for UTF8 character set, which is critical if you will have any international search results.  It will then spin up the scumblr container, linked to that database and set to use the local Sketchy.
