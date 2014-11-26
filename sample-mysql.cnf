@@ -1,0 +1,9 @@
+# For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/5.6/en/server-configuration-defaults.html
+
+[mysqld]
+
+character-set-server=utf8
+collation-server=utf8_unicode_ci
+
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
