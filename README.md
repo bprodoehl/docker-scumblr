@@ -5,7 +5,7 @@ docker-scumblr
 
 This container is derived from https://github.com/ahoernecke/docker_scumblr
 
-This repo contains everything you need to deploy a basic instance of [Scumblr](https://github.com/netflix/scumblr) and [Sketchy](https://github.com/netflix/sketchy). Scumblr is a Netflix open source project that allows performing periodic searches and storing / taking actions on the identified results. Sketchy is a Netflix open source project that performs screen captures of a URL.
+This repo contains everything you need to deploy a basic instance of [Scumblr](https://github.com/netflix/Scumblr) and [Sketchy](https://github.com/netflix/Sketchy). Scumblr is a Netflix open source project that allows performing periodic searches and storing / taking actions on the identified results. Sketchy is a Netflix open source project that performs screen captures of a URL.
 
 **If you just want to quickly test the application, start with the deployment section below.**
 
@@ -20,7 +20,9 @@ This section discusses required/optional configuration that can be done prior to
 
 ### API Keys
 
-Scumblr requires API keys to function. These can be setup in the config/scumblr/scumblr.rb file. Templates are contained in the file. By default these can be set using environment variables (see Environment Variables below).
+Scumblr requires API keys to function. Information on obtaining these keys can be found in the wiki, here: https://github.com/Netflix/Scumblr/wiki/Configuration
+
+Once obtained, these should be setup using environment variables (see Environment Variables below).
 
 ### Admin User
 
@@ -28,11 +30,11 @@ The default configuration will create the following admin user:
 
 ``admin@admin.admin:password``
 
-These credentials can be set using environment variables (see Environment Variables below).
+These credentials can be set using the ```SCUMBLR_ADMIN_USER``` and ```SCUMBLR_ADMIN_PASSWORD``` environment variables (see Environment Variables below).
 
 ### Database
 
-The default database will be an onboard SQLite db. This will work for testing but will be lost if the container terminates. To configure a permanent database, setup the database.yml file in config/scumblr/database.yml or use the environment variables (see Environment Variables below). For more information on the database.yml file see http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database.
+The default database will be an onboard SQLite db. This will work for testing but will be lost if the container terminates. To configure a permanent database use the environment variables (see Environment Variables below).
 
 ### SSL
 
@@ -41,49 +43,31 @@ This docker container ships with a self-signed cert to be used for SSL. To use a
 ### Environment Variables
 
 The following are environment variables available to configure scumblr:
-```
-SCUMBLR_HOST # Default hostname for scumblr (used for email notifications, etc.) i.e. "scumblr.com"
-SCUMBLR_PROTOCOL # Default protocol i.e. "https"
 
-SCUMBLR_DB_TYPE # database type i.e. "mysql"
-SCUMBLR_CREATE_DB # Run rake db:create if true. For initial DB setup.
-SCUMBLR_LOAD_SCHEMA # Run rake db:schema:load. For initial DB setup. Will reset DB to default!
-SCUMBLR_RUN_MIGRATIONS # Run rake db:migrate if true. Will update database with migrations if included.
-SCUMBLR_SEED_STATUSES # Create a default set of statuses if set to "true"
-SCUMBLR_SEED_ADMIN # Create an admin user (admin@admin.admin/password) if no users exist and SEED_ADMIN set to "true"
+  * ```SCUMBLR_HOST``` is the default hostname for scumblr (used for email notifications, etc.) i.e. "scumblr.com"
+  * ```SCUMBLR_PROTOCOL``` is the default protocol, i.e. "https"
 
-SCUMBLR_ADMIN_USER # User (defaults to admin@admin.admin)
-SCUMBLR_ADMIN_PASSWORD # Password (defaults to password)
+  * ```SCUMBLR_DB_TYPE``` is the database type, i.e. "mysql"
+  * ```SCUMBLR_CREATE_DB``` runs rake db:create if true. For initial DB setup.
+  * ```SCUMBLR_LOAD_SCHEMA``` runs rake db:schema:load. For initial DB setup. Will reset DB to default!
+  * ```SCUMBLR_RUN_MIGRATIONS``` runs rake db:migrate if true. Will update database with migrations if included.
+  * ```SCUMBLR_SEED_STATUSES``` creates a default set of statuses if set to "true"
+  * ```SCUMBLR_SEED_ADMIN``` creates an admin user (admin@admin.admin/password) if no users exist and SEED_ADMIN set to "true"
 
-SKETCHY_PORT_443_TCP_ADDR
-SKETCHY_PORT_443_TCP_PORT
-SKETCHY_USE_SSL
-SKETCHY_VERIFY_SSL
-SKETCHY_ACCESS_TOKEN
-SKETCHY_TAG_STATUS_CODE
+  * ```SCUMBLR_ADMIN_USER``` sets the initial super user (defaults to admin@admin.admin)
+  * ```SCUMBLR_ADMIN_PASSWORD``` sets the initial super user's password (defaults to password)
 
-RAILS_ENV # Select a rails environment (development, staging, production)
+  * ```RAILS_ENV``` selects a rails environment (development, staging, production)
 
-EBAY_ACCESS_KEY
+  * ```EBAY_ACCESS_KEY``` is the Ebay key, with [information on how to obtain that here](https://github.com/Netflix/Scumblr/wiki/eBay-Search-Provider-Configuration)
 
-FACEBOOK_APP_ID
-FACEBOOK_APP_SECRET
+  * ```FACEBOOK_APP_ID``` and ```FACEBOOK_APP_SECRET``` are the Facebook API keys. Information on how to get those is [coming soon](https://github.com/Netflix/Scumblr/wiki/Configuration).
 
-GOOGLE_DEVELOPER_KEY
-GOOGLE_CX
-GOOGLE_APPLICATION_NAME
-GOOGLE_APPLICATION_VERSION
+  * ```GOOGLE_DEVELOPER_KEY```,  ```GOOGLE_CX```, ```GOOGLE_APPLICATION_NAME``` and ```GOOGLE_APPLICATION_VERSION``` are the Google developer keys, with [information on how to obtain those here](https://github.com/Netflix/Scumblr/wiki/Google-Search-Provider-Configuration)
 
-YOUTUBE_DEVELOPER_KEY
-YOUTUBE_APPLICATION_NAME
-YOUTUBE_APPLICATION_VERSION
+  * ```YOUTUBE_DEVELOPER_KEY```, ```YOUTUBE_APPLICATION_NAME``` and ```YOUTUBE_APPLICATION_VERSION``` are the Youtube developer keys. Information on how to get those is [coming soon](https://github.com/Netflix/Scumblr/wiki/Configuration).
 
-TWITTER_CONSUMER_KEY
-TWITTER_CONSUMER_SECRET
-TWITTER_ACCESS_TOKEN
-TWITTER_ACCESS_TOKEN_SECRET
-
-```
+  * ```TWITTER_CONSUMER_KEY```, ```TWITTER_CONSUMER_SECRET```, ```TWITTER_ACCESS_TOKEN``` and ```TWITTER_ACCESS_TOKEN_SECRET``` are the Twitter developer keys, with [information on how to obtain that here](https://github.com/Netflix/Scumblr/wiki/Twitter-Search-Provider-Configuration)
 
 ## Deployment
 
@@ -102,7 +86,7 @@ This section includes instructions on creating and deploying a container running
 
 ``docker run -p 80:80 -p 443:443 scumblr``
 
-* Visit your server's domain name or ip in a browser
+* Visit your server's domain name or IP in a browser
 
 * Login with the credentials you specified (or the default if not changed: admin@admin.admin/password)
 
