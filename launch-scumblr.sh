@@ -38,6 +38,13 @@ docker run --name scumblr \
            -e DB_USER=$DB_USER \
            -e DB_PASSWORD=$DB_PASSWORD \
            -e DB_NAME=$DB_NAME \
+           -e SMTP_ADDRESS=$SMTP_ADDRESS \
+           -e SMTP_PORT=$SMTP_PORT \
+           -e SMTP_DOMAIN=$SMTP_DOMAIN \
+           -e SMTP_USER=$SMTP_USER \
+           -e SMTP_PASSWORD=$SMTP_PASSWORD \
+           -e SMTP_AUTHENTICATION=$SMTP_AUTHENTICATION \
+           -e SMTP_STARTTLS=$SMTP_STARTTLS \
            --link scumblr-mysql:db_1 \
            -p 80:80 -p 443:443 \
            -itd  bprodoehl/scumblr

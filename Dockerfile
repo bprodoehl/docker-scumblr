@@ -41,6 +41,8 @@ USER root
 RUN /bin/bash ubuntu_install.sh
 RUN python setup.py install
 
+WORKDIR /home/app
+
 # Copy seed file
 ADD config/scumblr/seeds.rb /home/app/scumblr/db/
 

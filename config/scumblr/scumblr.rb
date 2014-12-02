@@ -41,4 +41,27 @@ Scumblr::Application.configure do
   config.twitter_consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"]
   config.twitter_access_token        = ENV["TWITTER_ACCESS_TOKEN"]
   config.twitter_access_token_secret = ENV["TWITTER_ACCESS_TOKEN_SECRET"]
+
+  # Email configuration
+
+  if ENV["SMTP_ADDRESS"]
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings.address = ENV["SMTP_ADDRESS"]
+    if ENV["SMTP_PORT"]
+      config.action_mailer.smtp_settings.port = ENV["SMTP_PORT"]
+    end
+    config.action_mailer.smtp_settings.domain               = ENV["SMTP_DOMAIN"]
+    config.action_mailer.smtp_settings.user_name            = ENV["SMTP_USER"]
+    config.action_mailer.smtp_settings.password             = ENV["SMTP_PASSWORD"]
+    if ENV["SMTP_AUTHENTICATION"]
+      config.action_mailer.smtp_settings.authentication     = ENV["SMTP_AUTHENTICATION"]
+    else
+      config.action_mailer.smtp_settings.authentication     = "plain"
+    end
+    if ENV["SMTP_STARTTLS"]
+      config.action_mailer.smtp_settings.enable_starttls_auto = ENV["SMTP_STARTTLS"]
+    else
+      config.action_mailer.smtp_settings.enable_starttls_auto = true
+    end
+  end
 end
