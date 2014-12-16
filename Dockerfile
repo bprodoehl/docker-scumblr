@@ -24,6 +24,7 @@ ENV HOME /home/app
 USER app
 
 RUN mkdir /home/app/scumblr
+RUN mkdir /home/app/scumblr-config
 WORKDIR /home/app/scumblr
 
 RUN git clone https://github.com/bprodoehl/scumblr.git . && \
@@ -43,14 +44,11 @@ RUN python setup.py install
 
 WORKDIR /home/app
 
-# Copy seed file
-ADD config/scumblr/seeds.rb /home/app/scumblr/db/
-
-# Copy database.yml
-ADD config/scumblr/database.yml /home/app/scumblr/config/
-
-# Copy scumblr config
-ADD config/scumblr/scumblr.rb /home/app/scumblr/config/initializers/
+# Support using a git checkout in a volume by making sure that these files are
+# in the right spot at runtime
+ADD config/scumblr/seeds.rb /home/app/scumblr-config/
+ADD config/scumblr/database.yml /home/app/scumblr-config/
+ADD config/scumblr/scumblr.rb /home/app/scumblr-config/
 
 # Add nginx config files and ssl cert/key
 ADD config/nginx/server.crt /etc/nginx/ssl/

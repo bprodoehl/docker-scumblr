@@ -9,6 +9,9 @@ DB_USER=scumblr
 DB_PASSWORD=secret
 DB_NAME=scumblr
 
+SCUMBLR_ADMIN_USER=admin@admin.admin
+SCUMBLR_ADMIN_PASSWORD=password
+
 docker run --name scumblr-mysql \
            -e MYSQL_ROOT_PASSWORD=mysecretpassword \
            -e MYSQL_USER=$DB_USER \
@@ -30,9 +33,10 @@ docker run --name scumblr \
            -e SCUMBLR_LOAD_SCHEMA=true \
            -e SCUMBLR_RUN_MIGRATIONS=true \
            -e SCUMBLR_SEED_STATUSES=true \
+           -e SCUMBLR_SEED_DB=true \
            -e SCUMBLR_SEED_ADMIN=true \
-           -e "SCUMBLR_ADMIN_USER=admin@admin.admin" \
-           -e SCUMBLR_ADMIN_PASSWORD=password \
+           -e SCUMBLR_ADMIN_USER=$SCUMBLR_ADMIN_USER \
+           -e SCUMBLR_ADMIN_PASSWORD=$SCUMBLR_ADMIN_PASSWORD \
            -e SKETCHY_USE_SSL=false \
            -e SKETCHY_CREATE_DB=true \
            -e DB_USER=$DB_USER \

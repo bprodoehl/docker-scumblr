@@ -3,6 +3,20 @@
 cd /home/app/scumblr
 USER=app
 
+# Support a git checkout in a volume, by making sure that these Docker-specific
+# config files are where they should be.
+if [ ! -f /home/app/scumblr/config/initializers ]; then
+  cp /home/app/scumblr-config/scumblr.rb /home/app/scumblr/config/initializers/
+fi
+
+if [ ! -f /home/app/scumblr/config/database.yml ]; then
+  cp /home/app/scumblr-config/database.yml /home/app/scumblr/config/
+fi
+
+if [ ! -f /home/app/scumblr/db/seeds.rb ]; then
+  cp /home/app/scumblr-config/seeds.rb /home/app/scumblr/db/
+fi
+
 if [ "$SCUMBLR_DB_TYPE" == "mysql" ]; then
   DBYML=/home/app/scumblr/config/database.yml
   # MySQL database host
@@ -55,8 +69,10 @@ if [ "$SCUMBLR_RUN_MIGRATIONS" == "true" ]; then
   chpst -u$USER /home/app/.gem/ruby/2.1.0/bin/bundle exec rake db:migrate
 fi
 
-echo "*** Seeding db"
-chpst -u$USER /home/app/.gem/ruby/2.1.0/bin/bundle exec rake db:seed
+if [ "$SCUMBLR_SEED_DB" == "true" ]; then
+  echo "*** Seeding db"
+  chpst -u$USER /home/app/.gem/ruby/2.1.0/bin/bundle exec rake db:seed
+fi
 
 echo "*** Precompiling assets"
 chpst -u$USER /home/app/.gem/ruby/2.1.0/bin/bundle exec rake assets:precompile
